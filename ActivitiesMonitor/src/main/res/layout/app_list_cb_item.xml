@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/appIcon"
+        android:layout_width="@android:dimen/app_icon_size"
+        android:layout_height="@android:dimen/app_icon_size"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/app_list_item_margin"
+        android:layout_marginLeft="@dimen/app_list_item_margin"
+        android:layout_marginTop="@dimen/app_list_item_margin"
+        android:contentDescription=""
+        android:scaleType="fitCenter" />
+
+    <CheckBox
+        android:id="@+id/appSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/appIcon"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/app_list_item_margin" />
+
+    <TextView
+        android:id="@+id/appLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/appIcon"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/app_list_item_margin"
+        android:layout_toLeftOf="@+id/appSelected"
+        android:layout_toRightOf="@+id/appIcon"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

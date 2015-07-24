@@ -1,0 +1,9 @@
+<resources>
+
+    <dimen name="app_list_item_margin">4sp</dimen>
+
+    <declare-styleable name="whsInstalledApplicationsList">
+        <attr name="listTitle" format="string" />
+    </declare-styleable>
+
+</resources>
