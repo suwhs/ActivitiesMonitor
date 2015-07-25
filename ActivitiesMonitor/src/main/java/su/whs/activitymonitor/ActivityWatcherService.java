@@ -161,12 +161,13 @@ public abstract class ActivityWatcherService extends Service {
 			mThread.start();
 	}
 
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void startThreadLollipop1() {
 		mThread = new Thread(new Runnable() {
-			@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
 			@Override
 			public void run() {
-				UsageStatsManager usageStatsManager = (UsageStatsManager)getSystemService(USAGE_STATS_SERVICE);
+				UsageStatsManager usageStatsManager = (UsageStatsManager)getSystemService("usagestats");
 				Comparator<UsageStats> recentComp = new RecentUseComparator();
 				int TIMINGS = 20;
 				long[] timers_array = new long[TIMINGS];

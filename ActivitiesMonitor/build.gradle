@@ -1,34 +1,14 @@
 apply plugin: 'com.android.library'
-
-apply plugin: 'maven'
-
-uploadArchives {
-    repositories.mavenDeployer {
-        repository(url: "file://${System.properties['user.home']}/AndroidStudioProjects/maven-repository")
-        pom.project {
-            groupId 'su.whs'
-            artifactId 'activitiesmonitor'
-            version '1.3a'
-
-            inceptionYear '2015'
-            licenses {
-                license {
-                    name 'GPL v3'
-                    url 'https://www.gnu.org/licenses/gpl.txt'
-                    distribution 'repo'
-                }
-            }
-        }
-    }
-}
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 21
+    buildToolsVersion "21.0.2"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -38,6 +18,80 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+
+def siteUrl = 'http://whs.su'                          // Homepage URL of the library
+def gitUrl = 'https://github.com/suwhs/ActivitiesMonitor.git'   // Git repository URL
+group = 'su.whs'                                        // Maven Group ID for the artifact
+version = '1.1.4'
+
+install {
+    repositories.mavenInstaller {
+    pom.project {
+            packaging 'aar'
+            groupId 'su.whs'
+            artifactId 'activitiesmonitor'
+            version '1.1.4'
+            name 'ActivitiesMonitor'
+            url siteUrl
+            inceptionYear '2015'
+            licenses {
+                license {
+                    name 'GPL-3.0'
+                    url 'https://www.gnu.org/licenses/gpl.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+File propFile = "${System.properties['user.home']}${File.separator}.gradle${File.separator}bintray.properties" as File
+properties.load(propFile.newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "ActivitiesMonitor"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["GPL-3.0"]
+        publish = true
+    }
+}
+
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    // options.encoding = 'UTF-8' - commented out due to error
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
 
 dependencies {
