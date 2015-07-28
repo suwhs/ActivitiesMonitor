@@ -123,6 +123,7 @@ public abstract class ActivityWatcherService extends Service {
 			public void run() {
 				if (BuildConfig.DEBUG)
 					Log.d(TAG, "Thread starts");
+				onThreadStarts();
 				ActivityManager tasks = (ActivityManager) ActivityWatcherService.this
 						.getSystemService(Context.ACTIVITY_SERVICE);
 				List<ActivityManager.RunningTaskInfo> taskInfo;
@@ -335,4 +336,7 @@ public abstract class ActivityWatcherService extends Service {
 	public abstract void onActivityShown(ComponentName componentName);
 	public abstract void onActivityPaused(ComponentName componentName);
 
+	protected void onThreadStarts() {
+
+	}
 }
